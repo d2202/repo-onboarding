@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "repo-onboarding",
+  "description": "Structured onboarding into unfamiliar codebases for Claude Code.",
+  "owner": {
+    "name": "Denis Besfamilnyy",
+    "url": "https://github.com/d2202"
+  },
+  "plugins": [
+    {
+      "name": "repo-onboarding",
+      "description": "One-pass orientation in an unfamiliar repo — run/test commands taken from CI and Makefile rather than the README, entry points, the repo's generation rule, and the gotchas that cost an afternoon.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

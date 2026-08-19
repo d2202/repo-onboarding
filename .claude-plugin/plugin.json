@@ -1,0 +1,8 @@
+{
+  "name": "repo-onboarding",
+  "description": "Orient yourself in an unfamiliar repository in one pass: how to run it, how to test it, where execution starts, and what in the repo is lying to you.",
+  "author": {
+    "name": "Denis Besfamilnyy",
+    "url": "https://github.com/d2202"
+  }
+}
