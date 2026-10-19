@@ -1,0 +1,21 @@
+{
+  "name": "repo-onboarding",
+  "version": "1.1.0",
+  "description": "Orient yourself in an unfamiliar repository in one pass: how to run it, how to test it, where execution starts, and what in the repo is lying to you.",
+  "keywords": ["onboarding", "codebase", "orientation", "productivity"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Repo Onboarding",
+    "shortDescription": "One-pass orientation in an unfamiliar repo",
+    "longDescription": "Reads what actually executes — Makefile and CI — instead of paraphrasing the README: run/test commands, entry points, the repo's generation rule, and the gotchas that cost an afternoon.",
+    "developerName": "Denis Besfamilnyy",
+    "category": "Productivity",
+    "capabilities": ["Instructions"],
+    "websiteURL": "https://github.com/d2202/repo-onboarding",
+    "defaultPrompt": [
+      "What is this repo?",
+      "How do I run and test this?",
+      "Onboard me into this codebase."
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 # repo-onboarding
 
-A Claude Code skill for the first ten minutes in a repository you have never seen.
+A skill for the first ten minutes in a repository you have never seen. Runs in
+Claude Code and in Codex CLI from the same `skills/` directory.
 
 Ask "what is this?" and you normally get a paraphrased README. This skill instead
 reads what actually executes — the Makefile and CI config — finds where execution
@@ -22,29 +23,47 @@ It also names the repo's **generation rule** — the repeated shape a new unit o
 takes ("a UI section = two route files plus two registry edits"). That single line
 turns later searches into a path instead of a scan.
 
-At the end it offers to persist what it learned into `CLAUDE.md` — deliberately not the
-whole report, only the parts that change what a future session does. Stack and versions
-are excluded on purpose: they are one command away and rot first.
+At the end it offers to persist what it learned into the host's memory file —
+`CLAUDE.md` under Claude Code, `AGENTS.md` under Codex, or whichever of the two the
+repo already has — deliberately not the whole report, only the parts that change what
+a future session does. Stack and versions are excluded on purpose: they are one
+command away and rot first.
 
 ## Install
+
+### Claude Code
 
 ```
 /plugin marketplace add d2202/repo-onboarding
 /plugin install repo-onboarding
 ```
 
-Or without the plugin system — copy `skills/repo-onboarding/SKILL.md` to
+Without the plugin system — copy `skills/repo-onboarding/SKILL.md` to
 `~/.claude/skills/repo-onboarding/SKILL.md`.
+
+### Codex
+
+```
+codex plugin marketplace add d2202/repo-onboarding
+codex plugin add repo-onboarding@repo-onboarding
+```
+
+Without the plugin system — copy `skills/repo-onboarding/SKILL.md` to
+`~/.agents/skills/repo-onboarding/SKILL.md` (user-wide) or to
+`.agents/skills/repo-onboarding/SKILL.md` inside a repo. `/skills` lists what Codex
+picked up.
 
 ## Use
 
 Just ask, in English or Russian: "what is this?", "how do I run this?", "что тут
 происходит?". The skill triggers on broad questions about the repo you are in. It also
-triggers before edits in a directory with no `CLAUDE.md`.
+triggers before edits in a directory with no `CLAUDE.md`/`AGENTS.md`. In Codex you can
+also name it explicitly: `$repo-onboarding`.
 
 ## Optional
 
-If the `codebase-memory` MCP server is installed, the skill uses its graph for entry
+If the `codebase-memory` MCP server is installed (`.mcp.json` for Claude Code,
+`mcp_servers` in `~/.codex/config.toml` for Codex), the skill uses its graph for entry
 points and offers to index the repo at the end. Without it everything works the same
 via `find` and `grep`.
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "repo-onboarding",
-  "description": "Structured onboarding into unfamiliar codebases for Claude Code.",
+  "description": "Structured onboarding into unfamiliar codebases for Claude Code and Codex.",
   "owner": {
     "name": "Denis Besfamilnyy",
     "url": "https://github.com/d2202"

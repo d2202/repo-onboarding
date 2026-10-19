@@ -15,13 +15,13 @@ description: >-
   is exactly this skill's case.
 
   Also use before changing or debugging code in a directory you have not worked in
-  this session, when no CLAUDE.md describes it.
+  this session, when no CLAUDE.md or AGENTS.md describes it.
 
   If you are about to orient yourself by hand — listing files, reading the README,
   skimming git log — stop and use this skill instead; that IS this skill's job.
 
   Not for a single-symbol lookup ("where is function X"), a diff review, or a repo
-  whose CLAUDE.md already answers the question.
+  whose CLAUDE.md or AGENTS.md already answers the question.
 ---
 
 # Repository Onboarding
@@ -29,10 +29,16 @@ description: >-
 Learn enough to run, test, and safely change the repo. Output is a chat summary;
 a file is written only if the user says yes in step 4.
 
+**Memory file** below means the file this host loads into every session: `CLAUDE.md`
+under Claude Code, `AGENTS.md` under Codex. If the repo already contains the other
+one, that existing file wins — write where the repo already keeps its instructions
+rather than starting a second file.
+
 ## 1. One recon call
 
-Run this as a single Bash call. Never read a whole file; never enter
-`node_modules`, `vendor`, `dist`, `build`, `target`, `.venv`, or lockfiles.
+Run this as a single shell call (`Bash` in Claude Code, `shell` in Codex). Never read
+a whole file; never enter `node_modules`, `vendor`, `dist`, `build`, `target`, `.venv`,
+or lockfiles.
 
 ```bash
 ls -A | head -40
@@ -92,21 +98,27 @@ docker-compose; env vars with no default.
 
 ## 4. Offer to persist
 
-Ask both questions in ONE AskUserQuestion call, then act on the answers:
+Ask both questions in ONE turn — one `AskUserQuestion` call where the host has that
+tool, otherwise a single plain-text message with the options numbered — then act on
+the answers:
 
-1. CLAUDE.md — wording depends on the `ls` result from step 1:
-   - exists → "Append to the existing CLAUDE.md?" (append / leave it)
-   - absent → "Create a CLAUDE.md?" (create / don't)
+1. The memory file — wording depends on the `ls` result from step 1:
+   - exists → "Append to the existing CLAUDE.md/AGENTS.md?" (append / leave it)
+   - absent → "Create a CLAUDE.md (Claude Code) / AGENTS.md (Codex)?" (create / don't)
 2. codebase-memory — ask ONLY if that MCP is available: "Проиндексировать репо в
    codebase-memory?" (index / skip). Mention it costs minutes. On yes,
    run `index_repository`; on no, never raise it again this session. If the MCP is
-   not installed, ask about CLAUDE.md alone and say nothing about indexing.
+   not installed, ask about the memory file alone and say nothing about indexing.
 
 Ask once, in the user's language. If both answers are no, drop the subject entirely.
 
-### What goes into CLAUDE.md
+If the sandbox refuses the write (Codex read-only or approval-gated), do not retry
+with escalation on your own: print the exact block to paste and say which file it
+belongs in.
 
-Not the chat summary. CLAUDE.md loads into EVERY future session, so a line costs
+### What goes into the memory file
+
+Not the chat summary. This file loads into EVERY future session, so a line costs
 tokens always and earns its place only by changing what the next session does. Aim
 for 20-40 lines; past that, cut the least actionable section rather than trimming
 every section evenly.
@@ -131,8 +143,8 @@ only on a dev network). A host as trivia is noise; a host as the reason `poetry
 install` fails belongs next to the run command.
 
 Filter: nothing that a single command re-derives. Keep the file short enough that
-drift from reality is visible — a bloated CLAUDE.md becomes a README that lies, except
-this one gets read as truth every session.
+drift from reality is visible — a bloated memory file becomes a README that lies,
+except this one gets read as truth every session.
 
 Appending adds only missing sections — never rewrite or reorder existing content.
 Do not commit; leave that to the user.
